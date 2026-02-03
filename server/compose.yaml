@@ -15,8 +15,7 @@ services:
     restart: on-failure
     ports: ["9080:80"]
     volumes:
-      - ../htdocs/:/var/www/html
-      - ../logs/:/var/www/logs
+      - ..:/var/www/html
       - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
   db:
