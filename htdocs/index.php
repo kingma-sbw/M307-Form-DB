@@ -5,7 +5,6 @@ $anrede = $_POST['anrede'] ?? '';
 
 $message = '';
 
-/* Datenbank Verbindung aufbauen */
 /* Name der Datenbank Verbindung. mysql:dbname=...;host=...*/
 const DBCONNECTION = [
   'name' => 'db',
@@ -14,20 +13,10 @@ const DBCONNECTION = [
   'db'   => 'm307_php_form'
 ];
 
-if( $db = new mysqli(DBCONNECTION['name'], DBCONNECTION['user'], DBCONNECTION['pass'], DBCONNECTION['db']) ) {
-  $message = 'Datenbankverbindung erfolgreich';
-} else {
-  $message = 'Fehler bei der Datenbankverbindung';
-}
-
+/* Verbindung aufbauen */
 
 /* wurde das Forumlar abgeschickt?-Test */
-if( isset($_POST) && !empty($_POST) ) {
-  $sql = 'insert into `person` values(default,?,?,?)';
-    $db->prepare($sql);
-    $db->execute([$anrede, $vorname, $nachname]);
-    $message = 'Daten wurden gespeichert';
-}
+
 /* Einfügen-Abfrage, Platzhalter haben : */
 
 /* Abfrage vorbereiten */
@@ -80,10 +69,11 @@ function getAnrede(string $anrede): string
   <?php
   /* Liste ausgeben */
     try {
-      $sql = "SELECT * FROM `person`;";
-      $resultat = $db->query($sql);
-      foreach ($resultat->fetchAll() as $record) {
-        ?>
+      /* query `person` */
+
+      /* Abfrage vorbereiten */
+
+      foreach ($resultat as $record) : ?>
         <tr>
           <td>
             <?= getAnrede($record["anrede"]) ?>
@@ -95,11 +85,11 @@ function getAnrede(string $anrede): string
             <?= $record["nachname"] ?>
           </td>
         </tr>
-      <?php }
-    } catch () {
+      <?php endforeach;
+    } catch (Exception $e) {
       echo "Fehler: " . $e->getMessage();
-
-    } ?>
+    }
+  ?>
   </table>
 
 
