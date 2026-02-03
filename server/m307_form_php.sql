@@ -6,4 +6,4 @@ CREATE TABLE `person` (
   `vorname` varchar(255) DEFAULT NULL,
   `nachname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`person_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB;

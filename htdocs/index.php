@@ -7,16 +7,27 @@ $message = '';
 
 /* Datenbank Verbindung aufbauen */
 /* Name der Datenbank Verbindung. mysql:dbname=...;host=...*/
-$dbname = '';
-/* Datenbankbenutzzername */
-$dbuser = '';
-/* Kennwort */
-$dbpass =  '';
-/* Verbindung erstellen */
-$db = ;
+const DBCONNECTION = [
+  'name' => 'db',
+  'user' => 'root',
+  'pass' => 'passsword',
+  'db'   => 'm307_php_form'
+];
+
+if( $db = new mysqli(DBCONNECTION['name'], DBCONNECTION['user'], DBCONNECTION['pass'], DBCONNECTION['db']) ) {
+  $message = 'Datenbankverbindung erfolgreich';
+} else {
+  $message = 'Fehler bei der Datenbankverbindung';
+}
+
 
 /* wurde das Forumlar abgeschickt?-Test */
-if() {
+if( isset($_POST) && !empty($_POST) ) {
+  $sql = 'insert into `person` values(default,?,?,?)';
+    $db->prepare($sql);
+    $db->execute([$anrede, $vorname, $nachname]);
+    $message = 'Daten wurden gespeichert';
+}
 /* Einfügen-Abfrage, Platzhalter haben : */
 
 /* Abfrage vorbereiten */
@@ -24,7 +35,6 @@ if() {
 /* Daten mit Abfrage vorbereiten */
   
 /* Abfrage abschicken und das Resutat anzeigen */
-}
 
 function getAnrede(string $anrede): string
 {
@@ -62,25 +72,16 @@ function getAnrede(string $anrede): string
 
   </form>
   <p><?=$message?></p>
-  <?php
-  /* Liste ausgeben
-  ?>
 
-  <table>
-    <h1>Anmeldungen</h1>
-    <tr><th>Anrede</th><th>Vorname</th><th>Nachname</th></tr>
-    <?php
+<table>
+  <h1>Anmeldungen</h1>
+  <tr><th>Anrede</th><th>Vorname</th><th>Nachname</th></tr>
+  
+  <?php
+  /* Liste ausgeben */
     try {
-      // Datenbankverbindung herstellen
-      $dbhost = 'localhost'; // Datenbank-Host
-      /* Name der Datenbank Verbindung. mysql:dbname=...;host=...*/
-      $dbname = 'm307_php_form'; // Datenbankname
-      $dbuser = 'root'; // Benutzername
-      $dbpass = ''; // Passwort
-    
-      $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
       $sql = "SELECT * FROM `person`;";
-      $resultat = $dbh->query($sql);
+      $resultat = $db->query($sql);
       foreach ($resultat->fetchAll() as $record) {
         ?>
         <tr>
@@ -95,7 +96,7 @@ function getAnrede(string $anrede): string
           </td>
         </tr>
       <?php }
-    } catch (PDOException $e) {
+    } catch () {
       echo "Fehler: " . $e->getMessage();
 
     } ?>
