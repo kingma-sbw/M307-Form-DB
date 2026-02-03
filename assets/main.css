@@ -1,0 +1,60 @@
+body {
+    font: 12pt/1.5 sans-serif;
+    color: hsl(0, 42%, 87%);
+    margin: 0;
+    padding: 40px;
+    background: linear-gradient(180deg, hwb(215 44% 0%), hsl(246, 100%, 50%));
+    height: calc( 100cqh - 80px);
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.formwrapper {
+    display: grid;
+    row-gap: 10px;
+    grid-template-columns: 100px 1em 200px;
+    grid-template-rows: auto;
+    background-color: hsl(243, 80%, 50%);
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.titel {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+input,
+output,
+textarea,
+select,
+button {
+    font-family: inherit;
+    font-size: 10pt;
+
+    grid-column-start: 2;
+    grid-column-end: 4;
+    padding: 0.5em;
+    border-radius: 1em;
+    border: none;
+    outline: none;
+}
+
+input:focus {
+    background-color: hsl(66, 100%, 50%);
+}
+
+label {
+    color: white;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    margin: 0;
+}
